@@ -3,9 +3,43 @@ plugins {
     id 'java'
 }
 
-group = 'com.yourname'
+group = 'com.evergreen67.grapes'
 version = '1.0.0'
 archivesBaseName = 'grapes'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+minecraft {
+    // Official Mojang mappings for 1.20.1
+    mappings channel: 'official', version: '1.20.1'
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                grapes {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'info'
+            mods {
+                grapes {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
 
 repositories {
     mavenCentral()
@@ -16,8 +50,20 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.4.10'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "grapes",
+            "Specification-Vendor": "Evergreen67",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": project.version,
+            "Implementation-Vendor": "Evergreen67",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
 }
