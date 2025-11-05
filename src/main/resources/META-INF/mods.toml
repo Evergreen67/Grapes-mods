@@ -1,0 +1,9 @@
+modLoader="javafml"
+loaderVersion="[47,48)"
+license="MIT"
+[[mods]]
+modId="grapes"
+version="1.0.0"
+displayName="Grapes Mod"
+authors="ChatGPT & User"
+description='''Adds farmable grape vines to Minecraft'''
